@@ -1,0 +1,54 @@
+<div class="container">
+    <h2>Data List with File Upload, Table, Pagination, and Search</h2>
+    
+    <div class="file-upload">
+        <form class="row gx-3 gy-2 align-items-center">
+            <div class="col-sm-3">
+              <label class="visually-hidden" for="fileInput">Choose CSV File to upload </label>
+              <input type="file" class="form-control" id="fileInput" (change)="onFileChange($event)">
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+            </div>
+          </form>
+    </div>
+    
+    <div class="search">
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Search by id, name, body or email" />
+      </mat-form-field>
+    </div>
+    
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="postId">
+        <th mat-header-cell *matHeaderCellDef>PostId</th>
+        <td mat-cell *matCellDef="let element">{{ element.postId }}</td>
+      </ng-container>
+  
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let element">{{ element.email }}</td>
+      </ng-container>
+      <ng-container matColumnDef="body">
+        <th mat-header-cell *matHeaderCellDef>Body</th>
+        <td mat-cell *matCellDef="let element">{{ element.body }}</td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [length]="dataSource.data.length" [pageSize]="5" (page)="pageChanged($event)">
+    </mat-paginator>
+  </div>
