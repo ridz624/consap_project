@@ -2,7 +2,7 @@
 
 Prerequisites
 Node.js (v22.11.0)
-Angular CLI ()
+Angular CLI (v19.0.2)
 MySQL
 
 
