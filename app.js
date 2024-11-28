@@ -37,7 +37,6 @@ db.query('CREATE DATABASE IF NOT EXISTS consap_db', (err) => {
     }
     console.log('Connected to the database.');
 
-    // Step 3: Create the table if it doesn't exist
     dbConnection.query(`
       CREATE TABLE IF NOT EXISTS csv_data (
         uique_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,7 +54,6 @@ db.query('CREATE DATABASE IF NOT EXISTS consap_db', (err) => {
       }
     });
 
-    // Step 4: Set up the file upload route
     app.post('/upload_csv', multer({
       storage: multer.diskStorage({
         destination: (req, file, cb) => {
@@ -65,7 +63,7 @@ db.query('CREATE DATABASE IF NOT EXISTS consap_db', (err) => {
           cb(null, Date.now() + '-' + file.originalname);
         }
       }),
-      limits: { fileSize: 10 * 1024 * 1024 }, // 10 MB limit for demonstration
+      limits: { fileSize: 10 * 1024 * 1024 }, 
       fileFilter: (req, file, cb) => {
         if (file.mimetype === 'text/csv') {
           cb(null, true);
@@ -83,7 +81,6 @@ db.query('CREATE DATABASE IF NOT EXISTS consap_db', (err) => {
 
       let rowCount = 0;
 
-      // Read and parse the CSV file
       fs.createReadStream(req.file.path)
         .pipe(csvParser())
         .on('data', (row) => {
@@ -121,7 +118,6 @@ db.query('CREATE DATABASE IF NOT EXISTS consap_db', (err) => {
           });
       });
 
-    // Step 5: Start the Express server
     app.listen(port, () => {
       console.log(`Server running on http://localhost:${port}`);
     });
